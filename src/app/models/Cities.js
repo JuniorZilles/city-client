@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Cities = sequelize.define(
-    'cities',
+    'Cities',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -15,22 +15,11 @@ module.exports = (sequelize, DataTypes) => {
       state: {
         type: DataTypes.STRING,
         allowNull: false
-      },
-      createdAt: {
-        type: DataTypes.DATE,
-        allowNull: false
-      },
-      updatedAt: {
-        type: DataTypes.DATE,
-        allowNull: false
-      },
-      version: {
-        type: DataTypes.INTEGER,
-        allowNull: false
       }
     },
     {
-      timestamps: true
+      timestamps: true,
+      version: true,
     }
   )
   return Cities
