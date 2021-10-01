@@ -1,5 +1,6 @@
 const {Cities} = require('../models')
 const InvalidField = require('../errors/InvalidField')
+const NotFound = require('../errors/NotFound')
 
 const create = async payload => {
   if (typeof payload.name !== 'string' || payload.name.length === 0) {
@@ -9,16 +10,27 @@ const create = async payload => {
     throw new InvalidField('state')
   }
 
-  const city = await Cities.create(payload)
-  return city
+  return await Cities.create(payload)
 }
 
-const getByName = cityName => {}
+const getCityByName = async cityName => {
+   const city = await Cities.findOne({
+       where:{
+           name:cityName
+       }
+   })
+
+   if (!city){
+       throw new NotFound(cityName)
+   }
+
+   return city
+}
 
 const getByState = state => {}
 
 module.exports = {
   create,
-  getByName,
+  getCityByName,
   getByState
 }
