@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Clients = sequelize.define('clients',{
+    const Clients = sequelize.define('Clients',{
         id:{
           type:DataTypes.INTEGER,
           primaryKey: true,
@@ -31,19 +31,12 @@ module.exports = (sequelize, DataTypes) => {
             },
             key: 'id'
           }
-        },
-        createdAt:{
-          type:DataTypes.DATE,
-          allowNull: false
-        },
-        updatedAt:{
-          type:DataTypes.DATE,
-          allowNull: false
-        },
-        version:{
-          type:DataTypes.INTEGER,
-          allowNull: false
         }
-      })
+      },
+      {
+        timestamps: true,
+        version: true,
+      }
+      )
     return Clients
 }
