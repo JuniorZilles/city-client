@@ -1,0 +1,42 @@
+{
+  "name": "projeto_sprint_2",
+  "version": "1.0.0",
+  "description": "Projeto de consulta e cadastro de usuários e cidades",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js --ignore __tests__",
+    "pretest": "set NODE_ENV=test&&sequelize db:migrate",
+    "test": "jest",
+    "posttest": "set NODE_ENV=test&& sequelize db:migrate:undo:all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuniorZilles/projeto_sprint_2.git"
+  },
+  "keywords": [
+    "api",
+    "rest",
+    "tests",
+    "cidade",
+    "usuário"
+  ],
+  "author": "Junior Zilles",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JuniorZilles/projeto_sprint_2/issues"
+  },
+  "homepage": "https://github.com/JuniorZilles/projeto_sprint_2#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mysql2": "^2.3.0",
+    "sequelize": "^6.6.5",
+    "sequelize-cli": "^6.2.0"
+  },
+  "devDependencies": {
+    "jest": "^27.2.4",
+    "nodemon": "^2.0.13",
+    "sqlite": "^4.0.23"
+  }
+}
