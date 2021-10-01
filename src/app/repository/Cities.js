@@ -1,13 +1,24 @@
-const Cities = require('../models/Cities')
+const {Cities} = require('../models')
+const InvalidField = require('../errors/InvalidField')
 
-const create = (payload) => {}
+const create = async payload => {
+  if (typeof payload.name !== 'string' || payload.name.length === 0) {
+    throw new InvalidField('name')
+  }
+  if (typeof payload.state !== 'string' || payload.state === 0) {
+    throw new InvalidField('state')
+  }
 
-const getByName = (cityName)=>{}
+  const city = await Cities.create(payload)
+  return city
+}
 
-const getByState = (state)=>{}
+const getByName = cityName => {}
 
-module.exports= {
-    create,
-    getByName,
-    getByState
+const getByState = state => {}
+
+module.exports = {
+  create,
+  getByName,
+  getByState
 }
