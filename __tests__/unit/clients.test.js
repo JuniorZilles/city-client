@@ -1,4 +1,4 @@
-const  {truncateOrdered} = require('../utils/truncate')
+const { truncateOrdered } = require('../utils/truncate')
 const InvalidField = require('../../src/app/errors/InvalidField')
 const NotFound = require('../../src/app/errors/NotFound')
 const CitiesRepository = require('../../src/app/repository/Cities')
@@ -62,7 +62,9 @@ describe('src :: app :: repository :: clients', () => {
       city: city_created.id
     })
 
-    const client = await ClientsRepository.getClientByName('Godofredo Mascarello')
+    const client = await ClientsRepository.getClientByName(
+      'Godofredo Mascarello'
+    )
 
     expect(client).toBeDefined()
   })
@@ -80,7 +82,9 @@ describe('src :: app :: repository :: clients', () => {
       city: city_created.id
     })
 
-    const client = await ClientsRepository.getClientByName('Godofredo Mascarello')
+    const client = await ClientsRepository.getClientByName(
+      'Godofredo Mascarello'
+    )
 
     expect(client.fullname).toBe(client_created.fullname)
     expect(client.id).toBe(client_created.id)
@@ -88,9 +92,9 @@ describe('src :: app :: repository :: clients', () => {
 
   it('should throw a not found exception when doesnt find a client by his name', async () => {
     try {
-        const client = await ClientsRepository.getClientByName('Godofredo Silva')
+      const client = await ClientsRepository.getClientByName('Godofredo Silva')
     } catch (error) {
-        expect(error).toBeInstanceOf(NotFound)
+      expect(error).toBeInstanceOf(NotFound)
     }
   })
 
@@ -129,14 +133,13 @@ describe('src :: app :: repository :: clients', () => {
 
     expect(client.id).toBe(client_created.id)
     expect(client.fullname).toBe(client_created.fullname)
-    
   })
 
   it('should throw a not found exception when doesnt find a client by id', async () => {
     try {
-        const client = await ClientsRepository.getClientById(500)
+      const client = await ClientsRepository.getClientById(500)
     } catch (error) {
-        expect(error).toBeInstanceOf(NotFound)
+      expect(error).toBeInstanceOf(NotFound)
     }
   })
 
@@ -157,11 +160,42 @@ describe('src :: app :: repository :: clients', () => {
     expect(client).toBe(1)
   })
 
-  it('should throw a not found exception when doesnt find a client by id', async () => {
+  it('should throw a not found exception when doesnt find a client by id on removing', async () => {
     try {
-        const client = await ClientsRepository.removeClient(500)
+      const client = await ClientsRepository.removeClient(500)
     } catch (error) {
-        expect(error).toBeInstanceOf(NotFound)
+      expect(error).toBeInstanceOf(NotFound)
+    }
+  })
+
+  it('should update a client name by his id', async () => {
+    const city_created = await CitiesRepository.create({
+      name: 'Gramado',
+      state: 'RS'
+    })
+
+    const client_created = await ClientsRepository.createClient({
+      fullname: 'Godofredo Mascarello',
+      gender: 'Masculino',
+      birthday: '14/11/1994',
+      city: city_created.id
+    })
+
+    const client = await ClientsRepository.updateClientName(
+      client_created.id,
+      'Aberdã Silveira'
+    )
+    expect(client).toEqual([1])
+  })
+
+  it('should throw a not found exception when doesnt find the client to update', async () => {
+    try {
+      const client = await ClientsRepository.updateClientName(
+        500,
+        'Matusalem Silva'
+      )
+    } catch (error) {
+      expect(error).toBeInstanceOf(NotFound)
     }
   })
 })
