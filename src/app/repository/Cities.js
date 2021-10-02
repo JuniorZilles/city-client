@@ -1,4 +1,4 @@
-const {Cities} = require('../models')
+const { Cities } = require('../models')
 const InvalidField = require('../errors/InvalidField')
 const NotFound = require('../errors/NotFound')
 
@@ -14,31 +14,31 @@ const create = async payload => {
 }
 
 const getCityByName = async cityName => {
-   const city = await Cities.findOne({
-       where:{
-           name:cityName
-       }
-   })
+  const city = await Cities.findOne({
+    where: {
+      name: cityName
+    }
+  })
 
-   if (!city){
-       throw new NotFound(cityName)
-   }
+  if (!city) {
+    throw new NotFound(cityName)
+  }
 
-   return city
+  return city
 }
 
 const getByState = async state => {
-    const cities = await Cities.findAll({
-        where:{
-            state:state
-        }
-    })
+  const cities = await Cities.findAll({
+    where: {
+      state: state
+    }
+  })
 
-    if (!cities){
-      throw new NotFound(state)
+  if (cities.length == 0) {
+    throw new NotFound(state)
   }
 
-    return cities
+  return cities
 }
 
 module.exports = {
