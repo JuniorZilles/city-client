@@ -1,6 +1,6 @@
 
 
-### Exemplo .ENV
+### Example .ENV
 
 ~~~
 DB_USER=root
@@ -9,7 +9,7 @@ DB_NAME=users_sprint_2
 DB_HOST=127.0.0.1
 ~~~
 
-### Exemplo .ENV.TEST
+### Example .ENV.TEST
 
 ~~~
 DB_DIALECT=sqlite
