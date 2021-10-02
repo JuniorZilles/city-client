@@ -1,6 +1,7 @@
 const moment = require('moment')
 const { Clients } = require('../models')
 const InvalidField = require('../errors/InvalidField')
+const NotFound = require('../errors/NotFound')
 
 const createClient = async payload => {
   if (typeof payload.fullname !== 'string' || payload.fullname.length === 0) {
@@ -18,15 +19,27 @@ const createClient = async payload => {
 
   const birthday = moment(payload.birthday, 'DD/MM/YYYY').format(
     'YYYY-MM-DD HH:mm:ss'
-    )
+  )
   const age = moment().diff(birthday, 'years', false)
 
-  const newData = { ...payload, birthday, age}
+  const newData = { ...payload, birthday, age }
 
   return await Clients.create(newData)
 }
 
-const getClientByName = name => {}
+const getClientByName = async fullname => {
+  const client = await Clients.findOne({
+    where: {
+      fullname: fullname
+    }
+  })
+
+  if (!client) {
+    throw new NotFound(fullname)
+  }
+
+  return client
+}
 
 const getClientById = id => {}
 
