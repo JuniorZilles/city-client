@@ -1,4 +1,4 @@
-const {truncate} = require('../utils/truncate')
+const { truncate } = require('../utils/truncate')
 const InvalidField = require('../../src/app/errors/InvalidField')
 const NotFound = require('../../src/app/errors/NotFound')
 const CitiesRepository = require('../../src/app/repository/Cities')
@@ -55,20 +55,23 @@ describe('src :: app :: repository :: cities', () => {
   it('should get a city by state', async () => {
     const city = ['Dois Irmãos', 'Rio Grande']
     // promisse.all garante que todas as iterações feitas vão ser concluidas
-    await Promise.all(city.map(async name => {
+    await Promise.all(
+      city.map(async name => {
         await CitiesRepository.create({
-        name: name,
-        state: 'RS'
+          name: name,
+          state: 'RS'
+        })
       })
-    }))
+    )
     const cities = await CitiesRepository.getByState('RS')
     expect(cities.length).toEqual(2)
   })
 
-  it('should return a empty list when doesnt find any city', async () => {
-    const cities = await CitiesRepository.getByState('RS')
-
-    expect(cities).toEqual([])
+  it('should return a throw a not found exception when doesnt find any city', async () => {
+    try {
+      const cities = await CitiesRepository.getByState('RS')
+    } catch (error) {
+      expect(error).toBeInstanceOf(NotFound)
+    }
   })
 })
-
