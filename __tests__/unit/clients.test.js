@@ -51,7 +51,7 @@ describe('src :: app :: repository :: clients', () => {
 
   it('should get a client by his name and be defined', async () => {
     const city_created = await CitiesRepository.create({
-      name: 'Gramado',
+      name: 'Pelotas',
       state: 'RS'
     })
 
@@ -143,7 +143,7 @@ describe('src :: app :: repository :: clients', () => {
     }
   })
 
-  it('should remove a client by id and be equals to 1', async () => {
+  it('should remove a client by id', async () => {
     const city_created = await CitiesRepository.create({
       name: 'Gramado',
       state: 'RS'
@@ -157,7 +157,7 @@ describe('src :: app :: repository :: clients', () => {
     })
 
     const client = await ClientsRepository.removeClient(client_created.id)
-    expect(client).toBe(1)
+    expect(client).toBeDefined()
   })
 
   it('should throw a not found exception when doesnt find a client by id on removing', async () => {
@@ -185,7 +185,7 @@ describe('src :: app :: repository :: clients', () => {
       client_created.id,
       'Aberdã Silveira'
     )
-    expect(client).toEqual([1])
+    expect(client).toBeDefined()
   })
 
   it('should throw a not found exception when doesnt find the client to update', async () => {

@@ -19,7 +19,7 @@ describe('src :: app :: repository :: cities', () => {
 
   it('should create a city and return a id', async () => {
     const city = await CitiesRepository.create({
-      name: 'Dois Irmãos',
+      name: 'Porto Alegre',
       state: 'RS'
     })
     expect(city.id).not.toBeUndefined()
