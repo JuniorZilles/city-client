@@ -34,6 +34,10 @@ const getByState = async state => {
         }
     })
 
+    if (!cities){
+      throw new NotFound(state)
+  }
+
     return cities
 }
 
