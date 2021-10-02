@@ -103,4 +103,4 @@ dist
 # TernJS port file
 .tern-port
 
-__tests__/*.sqlite
+__tests__/*.sqlite*
