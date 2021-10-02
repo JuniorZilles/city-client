@@ -86,9 +86,55 @@ describe('src :: app :: repository :: clients', () => {
     expect(client.id).toBe(client_created.id)
   })
 
-  it('should throw a not found exception when doesnt find a client', async () => {
+  it('should throw a not found exception when doesnt find a client by his name', async () => {
     try {
         const client = await ClientsRepository.getClientByName('Godofredo Silva')
+    } catch (error) {
+        expect(error).toBeInstanceOf(NotFound)
+    }
+  })
+
+  it('should get a client by id and be defined', async () => {
+    const city_created = await CitiesRepository.create({
+      name: 'Gramado',
+      state: 'RS'
+    })
+
+    const client_created = await ClientsRepository.createClient({
+      fullname: 'Godofredo Mascarello',
+      gender: 'Masculino',
+      birthday: '14/11/1994',
+      city: city_created.id
+    })
+
+    const client = await ClientsRepository.getClientById(client_created.id)
+
+    expect(client).toBeDefined()
+  })
+
+  it('should get a client by id', async () => {
+    const city_created = await CitiesRepository.create({
+      name: 'Gramado',
+      state: 'RS'
+    })
+
+    const client_created = await ClientsRepository.createClient({
+      fullname: 'Godofredo Mascarello',
+      gender: 'Masculino',
+      birthday: '14/11/1994',
+      city: city_created.id
+    })
+
+    const client = await ClientsRepository.getClientById(client_created.id)
+
+    expect(client.id).toBe(client_created.id)
+    expect(client.fullname).toBe(client_created.fullname)
+    
+  })
+
+  it('should throw a not found exception when doesnt find a client by id', async () => {
+    try {
+        const client = await ClientsRepository.getClientById(500)
     } catch (error) {
         expect(error).toBeInstanceOf(NotFound)
     }
