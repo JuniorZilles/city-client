@@ -1,5 +1,6 @@
 const  {truncateOrdered} = require('../utils/truncate')
 const InvalidField = require('../../src/app/errors/InvalidField')
+const NotFound = require('../../src/app/errors/NotFound')
 const CitiesRepository = require('../../src/app/repository/Cities')
 const ClientsRepository = require('../../src/app/repository/Clients')
 
@@ -45,6 +46,51 @@ describe('src :: app :: repository :: clients', () => {
       const client = await ClientsRepository.createClient({})
     } catch (error) {
       expect(error).toBeInstanceOf(InvalidField)
+    }
+  })
+
+  it('should get a client by his name and be defined', async () => {
+    const city_created = await CitiesRepository.create({
+      name: 'Gramado',
+      state: 'RS'
+    })
+
+    const client_created = await ClientsRepository.createClient({
+      fullname: 'Godofredo Mascarello',
+      gender: 'Masculino',
+      birthday: '14/11/1994',
+      city: city_created.id
+    })
+
+    const client = await ClientsRepository.getClientByName('Godofredo Mascarello')
+
+    expect(client).toBeDefined()
+  })
+
+  it('should get a client by his name', async () => {
+    const city_created = await CitiesRepository.create({
+      name: 'Gramado',
+      state: 'RS'
+    })
+
+    const client_created = await ClientsRepository.createClient({
+      fullname: 'Godofredo Mascarello',
+      gender: 'Masculino',
+      birthday: '14/11/1994',
+      city: city_created.id
+    })
+
+    const client = await ClientsRepository.getClientByName('Godofredo Mascarello')
+
+    expect(client.fullname).toBe(client_created.fullname)
+    expect(client.id).toBe(client_created.id)
+  })
+
+  it('should throw a not found exception when doesnt find a client', async () => {
+    try {
+        const client = await ClientsRepository.getClientByName('Godofredo Silva')
+    } catch (error) {
+        expect(error).toBeInstanceOf(NotFound)
     }
   })
 })
