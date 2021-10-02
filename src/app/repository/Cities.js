@@ -27,7 +27,15 @@ const getCityByName = async cityName => {
    return city
 }
 
-const getByState = state => {}
+const getByState = async state => {
+    const cities = await Cities.findAll({
+        where:{
+            state:state
+        }
+    })
+
+    return cities
+}
 
 module.exports = {
   create,
