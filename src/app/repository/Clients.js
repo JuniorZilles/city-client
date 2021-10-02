@@ -55,7 +55,10 @@ const getClientById = async id => {
   return client
 }
 
-const removeClient = id => {}
+const removeClient = async id => {
+    const client = await getClientById(id)
+    return await Clients.destroy({where:{id:id}})
+}
 
 const updateClientName = (id, name) => {}
 
