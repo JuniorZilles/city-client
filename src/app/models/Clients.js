@@ -1,3 +1,4 @@
+const moment = require('moment')
 module.exports = (sequelize, DataTypes) => {
     const Clients = sequelize.define('Clients',{
         id:{
@@ -36,6 +37,12 @@ module.exports = (sequelize, DataTypes) => {
       {
         timestamps: true,
         version: true,
+        hooks:{
+            beforeSave: async client =>{
+                const years = moment().diff(client.birthday, 'years', false)
+                client.age = years
+            }
+        }
       }
       )
     return Clients
