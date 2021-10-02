@@ -3,8 +3,6 @@ const InvalidField = require('../../src/app/errors/InvalidField')
 const NotFound = require('../../src/app/errors/NotFound')
 const CitiesRepository = require('../../src/app/repository/Cities')
 
-const { expect } = require('@jest/globals')
-
 describe('src :: app :: repository :: cities', () => {
   beforeEach(async () => {
     // permite usar o mesmo nome e estado em diferentes testes
