@@ -56,11 +56,14 @@ const getClientById = async id => {
 }
 
 const removeClient = async id => {
-    const client = await getClientById(id)
-    return await Clients.destroy({where:{id:id}})
+  await getClientById(id)
+  return await Clients.destroy({ where: { id: id } })
 }
 
-const updateClientName = (id, name) => {}
+const updateClientName = async (id, fullname) => {
+  await getClientById(id)
+  return await Clients.update({ fullname: fullname }, { where: { id: id } })
+}
 
 module.exports = {
   createClient,
