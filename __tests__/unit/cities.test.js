@@ -1,7 +1,8 @@
-const truncate = require('../utils/truncate')
+const {truncate} = require('../utils/truncate')
 const InvalidField = require('../../src/app/errors/InvalidField')
 const NotFound = require('../../src/app/errors/NotFound')
 const CitiesRepository = require('../../src/app/repository/Cities')
+
 const { expect } = require('@jest/globals')
 
 describe('src :: app :: repository :: cities', () => {
@@ -72,3 +73,4 @@ describe('src :: app :: repository :: cities', () => {
     expect(cities).toEqual([])
   })
 })
+
