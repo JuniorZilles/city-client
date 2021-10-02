@@ -41,7 +41,19 @@ const getClientByName = async fullname => {
   return client
 }
 
-const getClientById = id => {}
+const getClientById = async id => {
+  const client = await Clients.findOne({
+    where: {
+      id: id
+    }
+  })
+
+  if (!client) {
+    throw new NotFound(id)
+  }
+
+  return client
+}
 
 const removeClient = id => {}
 
