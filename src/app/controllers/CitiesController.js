@@ -2,6 +2,12 @@ const router = require('express').Router()
 const MissingArgument = require('../errors/MissingArgument')
 const CitiesRepository = require('../repository/Cities')
 
+router.options('/', (req, res)=>{
+  res.set("Access-Control-Allow-Methods", 'GET, POST')
+  res.status(204)
+  res.end()
+})
+
 router.post('/', async (req, res, next) => {
   try {
     const body = req.body

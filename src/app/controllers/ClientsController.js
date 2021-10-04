@@ -2,6 +2,12 @@ const router = require('express').Router()
 const MissingArgument = require('../errors/MissingArgument')
 const ClientRepository = require('../repository/Clients')
 
+router.options('/', (req, res) => {
+  res.set('Access-Control-Allow-Methods', 'GET, POST')
+  res.status(204)
+  res.end()
+})
+
 router.post('/', async (req, res, next) => {
   try {
     const body = req.body
@@ -25,6 +31,13 @@ router.get('/', async (req, res, next) => {
     next(error)
   }
 })
+
+router.options('/:id', (req, res) => {
+  res.set('Access-Control-Allow-Methods', 'GET, DELETE, PATCH')
+  res.status(204)
+  res.end()
+})
+
 
 router.get('/:id', async (req, res, next) => {
   try {
