@@ -1,18 +1,15 @@
 
 
-### Example .ENV
+### Example for .ENV and .ENV.TEST
+
+Database name should be different for each
 
 ~~~
 DB_USER=root
 DB_PASS=root
 DB_NAME=users_sprint_2
 DB_HOST=127.0.0.1
-~~~
-
-### Example .ENV.TEST
-
-~~~
-DB_DIALECT=sqlite
+DB_DIALECT=mysql
 ~~~
 
 ### Requirements
