@@ -20,6 +20,25 @@ describe('src :: app :: controllers :: cities', () => {
     expect(response.body.id).toBeDefined()
   })
 
+  it('should not create a new city and return 400 with a message', async () => {
+    const responseCreated = await request(app)
+      .post('/api/v1/cities')
+      .send({
+        name: 'Igrejinha',
+        state: 'RS'
+      })
+
+      const response = await request(app)
+      .post('/api/v1/cities')
+      .send({
+        name: 'Igrejinha',
+        state: 'RS'
+      })
+
+    expect(response.status).toBe(400)
+    expect(response.body).toHaveProperty('message')
+  })
+
   it('should not create a city and return 400 when has missing values', async () => {
     const response = await request(app)
       .post('/api/v1/cities')
@@ -28,6 +47,7 @@ describe('src :: app :: controllers :: cities', () => {
       })
 
     expect(response.status).toBe(400)
+    expect(response.body).toHaveProperty('message')
   })
 
   it('should get a city by his name and return 200 with the content', async () => {
@@ -50,6 +70,7 @@ describe('src :: app :: controllers :: cities', () => {
     const responseTested = await request(app).get('/api/v1/cities')
 
     expect(responseTested.status).toBe(400)
+    expect(responseTested.body).toHaveProperty('message')
   })
 
   it('should not get a city by his name and return 404 when not found', async () => {
@@ -58,6 +79,7 @@ describe('src :: app :: controllers :: cities', () => {
     )
 
     expect(responseTested.status).toBe(404)
+    expect(responseTested.body).toHaveProperty('message')
   })
 
   it('should get a city by his state and return 200 with the content', async () => {
@@ -78,5 +100,6 @@ describe('src :: app :: controllers :: cities', () => {
     const responseTested = await request(app).get('/api/v1/cities?state=SP')
 
     expect(responseTested.status).toBe(404)
+    expect(responseTested.body).toHaveProperty('message')
   })
 })
