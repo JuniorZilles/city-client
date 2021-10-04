@@ -43,6 +43,7 @@ describe('src :: app :: controllers :: clients', () => {
       })
 
     expect(response.status).toBe(400)
+    expect(response.body).toHaveProperty('message')
   })
 
   it('should get a client by his name and return 200 with the content', async () => {
@@ -71,17 +72,19 @@ describe('src :: app :: controllers :: clients', () => {
   })
 
   it('should not get a client and return 400 when it has missing values', async () => {
-    const responseTested = await request(app).get('/api/v1/clients')
+    const response = await request(app).get('/api/v1/clients')
 
-    expect(responseTested.status).toBe(400)
+    expect(response.status).toBe(400)
+    expect(response.body).toHaveProperty('message')
   })
 
   it('should not get a client by his name and return 404 when not found', async () => {
-    const responseTested = await request(app).get(
+    const response = await request(app).get(
       '/api/v1/clients?fullname=Alexandre'
     )
 
-    expect(responseTested.status).toBe(404)
+    expect(response.status).toBe(404)
+    expect(response.body).toHaveProperty('message')
   })
 
   it('should get a client by id and return 200 with the content', async () => {
@@ -110,9 +113,10 @@ describe('src :: app :: controllers :: clients', () => {
   })
 
   it('should not get a client with invalid id and return 404 when not found', async () => {
-    const responseTested = await request(app).get('/api/v1/clients/300')
+    const response = await request(app).get('/api/v1/clients/300')
 
-    expect(responseTested.status).toBe(404)
+    expect(response.status).toBe(404)
+    expect(response.body).toHaveProperty('message')
   })
 
   it('should remove a client by id and return 204 with no content', async () => {
@@ -140,9 +144,10 @@ describe('src :: app :: controllers :: clients', () => {
   })
 
   it('should not remove a client with invalid id and return 404 when not found', async () => {
-    const responseTested = await request(app).get('/api/v1/clients/300')
+    const response = await request(app).get('/api/v1/clients/300')
 
-    expect(responseTested.status).toBe(404)
+    expect(response.status).toBe(404)
+    expect(response.body).toHaveProperty('message')
   })
 
   it('should update the client name by id and return 204 with no content', async () => {
@@ -172,13 +177,14 @@ describe('src :: app :: controllers :: clients', () => {
   })
 
   it('should not update a client with invalid id and return 404 when not found', async () => {
-    const responseTested = await request(app)
+    const response = await request(app)
       .patch('/api/v1/clients/300')
       .send({
         fullname: 'Bateu Santos'
       })
 
-    expect(responseTested.status).toBe(404)
+    expect(response.status).toBe(404)
+    expect(response.body).toHaveProperty('message')
   })
 
   it('should not update a client and return 400 when missing body', async () => {
@@ -197,10 +203,11 @@ describe('src :: app :: controllers :: clients', () => {
         city: cityResponse.body.id
       })
 
-    const responseTested = await request(app).patch(
+    const response = await request(app).patch(
       `/api/v1/clients/${clientResponse.body.id}`
     )
 
-    expect(responseTested.status).toBe(400)
+    expect(response.status).toBe(400)
+    expect(response.body).toHaveProperty('message')
   })
 })
