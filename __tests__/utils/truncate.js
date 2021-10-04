@@ -5,12 +5,12 @@ module.exports = {
   truncate: () => {
     return Promise.all(
       Object.keys(sequelize.models).map(key => {
-        return sequelize.models[key].destroy({ truncate: true, force: true, restartIdentity: true  })
+        return sequelize.models[key].destroy({ truncate: { cascade: true }, force: true, restartIdentity: true  })
       })
     )
   },
   truncateOrdered: async () => {
-    await sequelize.models['Clients'].destroy({ truncate: true, force: true, restartIdentity: true  })
-    await sequelize.models['Cities'].destroy({ truncate: true, force: true, restartIdentity: true  })
+    await sequelize.models['Clients'].destroy({ truncate: { cascade: true }, force: true, restartIdentity: true  })
+    await sequelize.models['Cities'].destroy({ truncate: { cascade: true }, force: true, restartIdentity: true  })
   }
 }
