@@ -1,5 +1,6 @@
 const { truncate } = require('../utils/truncate')
 const InvalidField = require('../../src/app/errors/InvalidField')
+const AlreadyCreated = require('../../src/app/errors/AlreadyCreated')
 const NotFound = require('../../src/app/errors/NotFound')
 const CitiesRepository = require('../../src/app/repository/Cities')
 
@@ -23,6 +24,21 @@ describe('src :: app :: repository :: cities', () => {
       state: 'RS'
     })
     expect(city.id).not.toBeUndefined()
+  })
+
+  it('should not create a city with same name and state', async () => {
+    const cityCreate = await CitiesRepository.create({
+      name: 'Porto Alegre',
+      state: 'RS'
+    })
+    try {
+      const city = await CitiesRepository.create({
+        name: 'Porto Alegre',
+        state: 'RS'
+      })
+    } catch (error) {
+      expect(error).toBeInstanceOf(AlreadyCreated)
+    }
   })
 
   it('should throw a invalidfield exception to validate missing data', async () => {
